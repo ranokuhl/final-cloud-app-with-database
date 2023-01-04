@@ -96,18 +96,15 @@ class Enrollment(models.Model):
 
 
 # <HINT> Create a Question Model with:
-    # Used to persist question content for a course
     # Has a One-To-Many (or Many-To-Many if you want to reuse questions) relationship with course
-    # Has a grade point for each question
-    # Has question content
     # Other fields and methods you would like to design
 class Question(models.Model):
-    # Foreign key to lesson
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
-    # question text
+    # Has question content
     question_text = models.CharField(max_length=500)
-    # question grade/mark
+    # Has a grade point for each question
     grade = models.IntegerField(default=0)
+    # Used to persist question content for a course
+    lesson = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
@@ -123,12 +120,12 @@ class Question(models.Model):
     # One-To-Many (or Many-To-Many if you want to reuse choices) relationship with Question
     # Other fields and methods you would like to design
 class Choice(models.Model):
-    # Used to persist choice content for a question
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     # Choice content
     choice_text = models.CharField(max_length=200)
     # Indicate if this choice of the question is a correct one or not
-    is_correct_choice = models.BooleanField(default=False)
+    is_correct = models.BooleanField(default=False)
+    # Used to persist choice content for a question
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
 
 # <HINT> The submission model

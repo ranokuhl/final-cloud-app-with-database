@@ -31,7 +31,7 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ['question_text', 'grade']
 
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ['choice_text', 'is_correct_choice']
+    list_display = ['choice_text', 'is_correct']
 
 
 # <HINT> Register Question and Choice models here

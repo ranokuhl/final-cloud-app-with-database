@@ -41,7 +41,13 @@
 
     <!-- Page content -->
     <div class="container-fluid">
+        <div class="card mt-1">
+            <div class="card-header">
             <h2>{{ course.name }}</h2>
+            </div>
+            <div class="card-body">{{course.description}}</div>
+        </div>
+        <!--
             <div class="card-columns-vertical">
                 {% for lesson in course.lesson_set.all %}
                     <div class="card mt-1">
@@ -50,7 +56,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <!-- Task: show questions and choices -->
+             Task: show questions and choices -->
             {% if user.is_authenticated %}
             <!-- <HINT> Use Bootstrap Collapse to hide exam first, more details could be found here
             https://www.w3schools.com/bootstrap4/bootstrap_collapse.asp-->
@@ -67,16 +73,16 @@
             -->
 
             <div id="exam" class="collapse">
-                Click to expand elements within the collapse div
+             
 
                 <!-- A choice submission form example -->
-                <form id="questionform" action="point to a submit view" method="post">
-                            ... for each question in the course ...
+                <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post">
+                    {% for question in course.question_set.all %}
                             <div class="card mt-1">
                                 <div class="card-header"><h5>{{ question.question_text}}</h5></div>
                                 {% csrf_token %}
                                 <div class="form-group">
-                                   ... for each choice in the question ...
+                                    {% for choice in question.choice_set.all %}
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input type="checkbox" name="choice_{{choice.id}}"
@@ -84,8 +90,10 @@
                                                    value="{{choice.id}}">{{ choice.choice_text }}
                                         </label>
                                     </div>
+                                    {% endfor %}
                                 </div>
                             </div>
+                            {% endfor %}
                         <input class="btn btn-success btn-block" type="submit" value="Submit">
                 </form> 
 
