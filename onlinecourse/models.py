@@ -120,12 +120,16 @@ class Question(models.Model):
 
 
 #  <HINT> Create a Choice Model with:
-    # Used to persist choice content for a question
     # One-To-Many (or Many-To-Many if you want to reuse choices) relationship with Question
-    # Choice content
-    # Indicate if this choice of the question is a correct one or not
     # Other fields and methods you would like to design
-# class Choice(models.Model):
+class Choice(models.Model):
+    # Used to persist choice content for a question
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    # Choice content
+    choice_text = models.CharField(max_length=200)
+    # Indicate if this choice of the question is a correct one or not
+    is_correct_choice = models.BooleanField(default=False)
+
 
 # <HINT> The submission model
 # One enrollment could have multiple submission
